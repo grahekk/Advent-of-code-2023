@@ -3,7 +3,7 @@ import re
 
 puzzle_input_url = "https://adventofcode.com/2023/day/1/input"
 test_input = ["1abc2","pqr3stu8vwx","a1b2c3d4e5f","treb7uchet"]
-input_file = "C:/Users/nikol/Documents/GitHub/Advent-of-code-2023/scripts/day_01/input.txt"
+input_file = "input.txt"
 
 def get_calibration_values_1(puzzle_input):
     for i in puzzle_input:
