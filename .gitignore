@@ -123,6 +123,7 @@ venv.bak/
 # Spyder project settings
 .spyderproject
 .spyproject
+workspace.code-workspace
 
 # Rope project settings
 .ropeproject
