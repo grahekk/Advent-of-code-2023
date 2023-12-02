@@ -6,10 +6,16 @@ Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
 Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
 """
+input_file = "input.txt"
+with open(input_file) as file:
+    data = file.read().splitlines()
 
 possible_ids = []
-games = test_games.strip().split(f"Game ")
-games = games[1:]
+# games = test_games.strip().split(f"Game ")
+# games = test_games.split(f"Game ")
+# games = games[1:]
+
+games = data
 
 for i in games:
     game = i.replace(':',';')
@@ -32,8 +38,10 @@ for i in games:
             elif "green" in p:
                 green_cubes = int(re.search(r'\d+', p).group())
                 print(green_cubes)
-            else:
-                game_id = int(p)
+            elif "Game":
+                # game_id = int(p)
+                game_id = int(re.search(r'\d+', p).group())
+
 
         if red_cubes > 12 or green_cubes > 13 or blue_cubes > 15:
             possibility = False
