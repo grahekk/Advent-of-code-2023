@@ -56,12 +56,17 @@ def part_1():
 
     print(possible_ids)
     print(sum(possible_ids))
-            
+
+power = []       
 def part_2():
     for i in games:
         game = i.replace(':',';')
         game = game.split(';')
         print(game)
+        blue_list = []
+        red_list = []
+        green_list = []
+
         for j in game:
             pairs = j.split(',')
             print(pairs)
@@ -72,29 +77,21 @@ def part_2():
                 # print(p)
                 if "blue" in p:
                     blue_cubes = int(re.search(r'\d+', p).group())
-                    
+                    blue_list.append(blue_cubes)
                 elif "red" in p:
                     red_cubes = int(re.search(r'\d+', p).group())
-                    print(red_cubes)
+                    red_list.append(red_cubes)
                 elif "green" in p:
                     green_cubes = int(re.search(r'\d+', p).group())
-                    print(green_cubes)
+                    green_list.append(green_cubes)
                 elif "Game":
                     # game_id = int(p)
                     game_id = int(re.search(r'\d+', p).group())
 
-            if red_cubes > 12 or green_cubes > 13 or blue_cubes > 14:
-                possibility = False
-                print(f"skipping game id {game_id}")
-                break
-            else:
-                possibility = True
-        if possibility == True:
-            possible_ids.append(game_id)
-            # print(possible_ids)
+        power.append(max(blue_list)*max(red_list)*max(green_list))
 
-    print(possible_ids)
-    print(sum(possible_ids))
+    print(power)
+    print(sum(power))
 
 if __name__ == "__main__":
     part_2()
