@@ -1,6 +1,4 @@
-
-
-engine_schema = """
+test_engine_schema = """
 467..114..
 ...*......
 ..35..633.
@@ -12,6 +10,13 @@ engine_schema = """
 ...$.*....
 .664.598..
 """
+engine_schema = "input.txt"
+
+def get_puzzle_input_file(file):
+    with open(file) as input_file:
+        data = input_file.read().splitlines()
+        return data
+
 
 symbol_positions = []
 digits = []
@@ -19,6 +24,9 @@ numbers = []
 digit_positions = []
 number_positions = []
 rows = engine_schema.split("\n")
+
+rows = get_puzzle_input_file(engine_schema)
+
 
 #symbol positions
 for row_count, row in enumerate(rows):
@@ -39,11 +47,42 @@ for row_count, row in enumerate(rows):
             digit_positions = []
             digits = []
 
-# TODO: clean lists from empty strings/lists numbers/number positions
-# TODO: check positions of numbers and symbols
+
+numbers = [i for i in numbers if i]
+number_positions = [i for i in number_positions if i]
 
 
+adjacent_numbers = []
+adjacent_positions = []
+adjacent = []
+
+for positions_list in number_positions:
+    #list
+    for position in positions_list:
+        for symbol in symbol_positions:
+            if (symbol[0] == position[0] and (symbol[1]+1==position[1] or symbol[1]-1==position[1])) \
+            or (symbol[0]-1 == position[0] and (symbol[1]+1==position[1] or symbol[1] == position[1] or symbol[1]-1 == position[1])) \
+            or (symbol[0]+1 == position[0] and (symbol[1]+1==position[1] or symbol[1] == position[1] or symbol[1]-1 == position[1])):
+                adjacent_positions.append(True)
+            else:
+                adjacent_positions.append(False)
+        
+        adjacent_numbers.append(sum(adjacent_positions))
+        adjacent_positions = []
+    adjacent.append(adjacent_numbers)
+    adjacent_numbers = []
+
+bool_adj = []
+for adj in adjacent:        
+    bool_list = list(map(bool,adj))
+    if any(bool_list):
+        bool_adj.append(True)
+    else:
+        bool_adj.append(False)
+
+
+print(bool_adj)
 print(numbers)
-print(symbol_positions)
-print(digit_positions)
-print(number_positions)
+filtered_list = [i for (i, v) in zip(numbers, bool_adj) if v]
+filter_number_list = [int(i) for i in filtered_list]
+print(sum(filter_number_list))
