@@ -1,4 +1,6 @@
-test_engine_schema = """
+import re
+
+e_schema = """
 467..114..
 ...*......
 ..35..633.
@@ -32,20 +34,26 @@ rows = get_puzzle_input_file(engine_schema)
 for row_count, row in enumerate(rows):
     for col_count, col in enumerate(row):
         # col_position = col, row
-        if col in "$*#+":
+        if not col.isalnum() and col not in"\.":
+            digit_position = None
+            digits = []
             symbol_postition = col_count, row_count
             symbol_positions.append(symbol_postition)
+        # elif col == r"\*":
+        #     print(f"found an *! in {col}")
         elif col.isdigit():
             digit_position = col_count, row_count
             digit_positions.append(digit_position)
             digits.append(col)
-        else: # if position is . 
+        elif col in "\.": # if position is . 
             digit_position = None
             digits = "".join(digits)
             numbers.append(digits)
             number_positions.append(digit_positions)
             digit_positions = []
             digits = []
+        else:
+            print(f"found an *! in {col}")
 
 
 numbers = [i for i in numbers if i]
@@ -81,8 +89,8 @@ for adj in adjacent:
         bool_adj.append(False)
 
 
-print(bool_adj)
-print(numbers)
+# print(numbers)
 filtered_list = [i for (i, v) in zip(numbers, bool_adj) if v]
 filter_number_list = [int(i) for i in filtered_list]
+# print(filter_number_list)
 print(sum(filter_number_list))
